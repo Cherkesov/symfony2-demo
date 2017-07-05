@@ -1,6 +1,7 @@
-gfb_chat_bot:
-    resource: "@GFBChatBotBundle/Resources/config/routing.yml"
-    prefix:   /
+viber_bot_demo:
+    resource: "@ViberBotDemoBundle/Controller/"
+    type:     annotation
+    prefix:   /viber-bot-demo
 
 app:
     resource: '@AppBundle/Controller/'

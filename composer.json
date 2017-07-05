@@ -1,10 +1,11 @@
 {
-  "name": "GFB/symfony2-demo",
+  "name": "gfb/symfony2-demo",
   "license": "MIT",
   "type": "project",
   "autoload": {
     "psr-4": {
       "AppBundle\\": "src/AppBundle",
+      "ViberBotDemoBundle\\": "src/ViberBotDemoBundle",
       "GFB\\ChatBotBundle\\": "src/GFB/ChatBotBundle"
     },
     "classmap": [
@@ -60,6 +61,6 @@
     "incenteev-parameters": {
       "file": "app/config/parameters.yml"
     },
-    "branch-alias": {}
+    "branch-alias": null
   }
 }
