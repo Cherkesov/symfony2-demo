@@ -1,0 +1,3 @@
+gfb_chat_bot_homepage:
+    path:     /
+    defaults: { _controller: GFBChatBotBundle:Default:index }

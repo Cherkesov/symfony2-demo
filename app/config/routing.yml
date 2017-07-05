@@ -1,0 +1,7 @@
+gfb_chat_bot:
+    resource: "@GFBChatBotBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
