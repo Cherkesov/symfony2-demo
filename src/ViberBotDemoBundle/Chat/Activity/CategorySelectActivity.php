@@ -11,14 +11,30 @@ class CategorySelectActivity extends Activity
     {
         echo 'Please, select category!';
 
-        return $this->redirect('wildfowl');
+//        return $this->redirect('wildfowl');
     }
 
     /**
-     * @GFBChatBot\WaitFor("category")
+     * @param string $text
+     *
+     * @GFBChatBot\Action("viber_bot_demo__category__get_text")
+     * @GFBChatBot\RegexMatch(expression="/^([\w\s]+)$/")
      */
-    public function waitUserSelection()
+    public function getTextAction($text)
     {
-        die('Method ' . __METHOD__ . ' catch it!');
+        die('Method ' . __METHOD__ . ' catch it! Get some text - ' . $text);
+//        $this->redirect(ProductActivity::class);
+    }
+
+    /**
+     * @param integer $id
+     *
+     * @GFBChatBot\Action("viber_bot_demo__category__selection")
+     * @GFBChatBot\RegexMatch(expression="/^([\d]+)$/")
+     */
+    public function waitUserSelectionAction($id)
+    {
+        die('Method ' . __METHOD__ . ' catch it! Category ID = ' . $id);
+//        $this->redirect(ProductActivity::class);
     }
 }
