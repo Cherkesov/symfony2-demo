@@ -15,6 +15,7 @@ RUN apt-get update
 RUN echo "mysql-server-5.5 mysql-server/root_password password 123456" | debconf-set-selections
 RUN echo "mysql-server-5.5 mysql-server/root_password_again password 123456" | debconf-set-selections
 RUN apt-get -y install mysql-server-5.5
+RUN service mysql start
 
 RUN apt-get install -y php7.0
 RUN apt-get install -y php7.0-mysql php7.0-sqlite3
@@ -36,9 +37,10 @@ WORKDIR /code
 
 RUN rm -f app/logs/*.log
 RUN rm -rf app/cache/dev/ app/cache/prod/ app/cache/test/
+RUN rm -rf vendor/
 
 CMD composer install
 CMD php app/console doctrine:database:create --if-not-exists
 CMD php app/console doctrine:schema:update --force
 
-#ENTRYPOINT php app/console server:start
+ENTRYPOINT service mysql start && php app/console server:start 127.0.0.1:8080
