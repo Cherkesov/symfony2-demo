@@ -17,9 +17,5 @@ doctrine:
                 driver:   pdo_sqlite
                 path:     "%kernel.cache_dir%/demo.db"
 
-web_profiler:
-    toolbar: false
-    intercept_redirects: false
-
 swiftmailer:
     disable_delivery: true
