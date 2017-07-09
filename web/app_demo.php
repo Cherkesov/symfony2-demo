@@ -1,12 +1,11 @@
 <?php
 
-//use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../app/autoload.php';
-//Debug::enable();
+include_once __DIR__.'/../app/bootstrap.php.cache';
 
-$kernel = new AppKernel('demo', true);
+$kernel = new AppKernel('demo', false);
 $kernel->loadClassCache();
 
 $request = Request::createFromGlobals();
