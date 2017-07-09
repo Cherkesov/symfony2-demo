@@ -1,7 +1,17 @@
+sudo: required
+
+services:
+  - docker
+
 language: php
 php:
   - '7.0'
+
 script:
   - composer install
   - php app/console doctrine:schema:drop --force -e test
   - php app/console doctrine:schema:update --force -e test
+
+after_success:
+  - sh ./.travis/deploy_dockerhub.sh
+  - test “$TRAVIS_BRANCH” = “master” && sh .travis/deploy_heroku.sh
