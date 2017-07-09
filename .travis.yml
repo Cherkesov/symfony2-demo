@@ -10,9 +10,6 @@ php:
 script:
   - composer install
   - php app/console cache:clear -e demo
-  - php app/console doctrine:database:create --if-not-exists -e demo
-  - php app/console doctrine:schema:drop --force -e demo
-  - php app/console doctrine:schema:drop --force -e demo
   - php app/console doctrine:schema:update --force -e demo
 
 after_success:
