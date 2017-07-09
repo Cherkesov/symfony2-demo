@@ -41,4 +41,4 @@ CMD composer install
 CMD php app/console doctrine:database:create --if-not-exists
 CMD php app/console doctrine:schema:update --force
 
-ENTRYPOINT php app/console server:start
+#ENTRYPOINT php app/console server:start

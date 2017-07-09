@@ -1,0 +1,27 @@
+web:
+  build: .
+  command: 'bash -c ''vendor/bin/heroku-php-apache2 /code/web/'''
+  working_dir: /code
+  volumes:
+    - '.:/code'
+  environment:
+    PORT: 8080
+  ports:
+    - '8080:8080'
+shell:
+  build: .
+  command: bash
+  working_dir: /code
+  environment:
+    PORT: 8080
+  ports:
+    - '8080:8080'
+  volumes:
+    - '.:/code'
+# dev container
+dev:
+  build: .
+  ports:
+    - "80:80"
+  volumes:
+    - .:/var/www
