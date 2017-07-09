@@ -14,7 +14,7 @@ class Activity
     public function redirect($activityName)
     {
         $activity = new $activityName();
-        if (!$activityName instanceof Activity) {
+        if (!$activity instanceof Activity) {
             throw new \Exception($activityName . ' is not activity!');
         }
 

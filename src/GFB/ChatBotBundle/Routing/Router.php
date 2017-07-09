@@ -2,10 +2,8 @@
 
 namespace GFB\ChatBotBundle\Routing;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\Annotations\CachedReader;
 use GFB\ChatBotBundle\Activity;
-
 use GFB\ChatBotBundle\Foundation\Request;
 use GFB\ChatBotBundle\MatcherInterface;
 
@@ -14,20 +12,13 @@ class Router
     /** @var CachedReader */
     private $annotationReader;
 
-    /** @var Registry */
-    private $doctrine;
-
     /**
      * Router constructor.
      * @param CachedReader $annotationReader
-     * @param Registry $doctrine
      */
-    public function __construct(
-        CachedReader $annotationReader,
-        Registry $doctrine
-    ) {
+    public function __construct(CachedReader $annotationReader)
+    {
         $this->annotationReader = $annotationReader;
-        $this->doctrine = $doctrine;
     }
 
     /**

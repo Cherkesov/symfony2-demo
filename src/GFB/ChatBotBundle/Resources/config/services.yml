@@ -4,9 +4,4 @@ services:
         class: GFB\ChatBotBundle\Routing\Router
         arguments:
             - "@annotation_reader"
-            - "@doctrine"
-            - "%gfb_chat_bot.config.welcome_activity%"
 
-#    gfb_chat_bot.example:
-#        class: GFB\ChatBotBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
