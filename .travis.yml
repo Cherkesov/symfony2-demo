@@ -9,8 +9,8 @@ php:
 
 script:
   - composer install --no-dev
-  - php app/console doctrine:schema:drop --force -e test
-  - php app/console doctrine:schema:update --force -e test
+  - php app/console doctrine:schema:drop --force
+  - php app/console doctrine:schema:update --force
 
 after_success:
   - sh ./.travis/deploy_dockerhub.sh
