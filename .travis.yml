@@ -8,7 +8,7 @@ php:
   - '7.0'
 
 script:
-  - composer install
+  - composer install --no-dev
   - php app/console doctrine:schema:drop --force -e test
   - php app/console doctrine:schema:update --force -e test
 
