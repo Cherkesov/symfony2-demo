@@ -39,7 +39,7 @@ RUN rm -f app/logs/*.log
 RUN rm -rf app/cache/dev/ app/cache/prod/ app/cache/test/
 RUN rm -rf vendor/
 
-CMD composer install
+CMD composer install --no-dev
 CMD php app/console doctrine:database:create --if-not-exists
 CMD php app/console doctrine:schema:update --force
 
