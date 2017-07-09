@@ -9,6 +9,7 @@ php:
 
 script:
   - composer install --no-dev
+  - php app/console cache:clear -e prod
   - php app/console doctrine:schema:drop --force
   - php app/console doctrine:schema:update --force
 
