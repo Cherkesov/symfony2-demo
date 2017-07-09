@@ -29,7 +29,7 @@ RUN php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php')
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
 
-EXPOSE 8000
+EXPOSE 8080
 
 COPY ./ /code
 WORKDIR /code
