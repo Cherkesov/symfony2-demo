@@ -3,15 +3,24 @@
 namespace ViberBotDemoBundle\Chat\Activity;
 
 use GFB\ChatBotBundle\Activity;
-use GFB\ChatBotBundle\Annotation as GFBChatBot;
+use GFB\ChatBotBundle\Matcher as GFBChatMatcher;
 
 class WelcomeActivity extends Activity
 {
     /**
-     * @GFBChatBot\WaitFor("hello")
+     * @GFBChatMatcher\Verbatim("category")
+     */
+    public function categoryAction()
+    {
+        return $this->redirect(CategorySelectActivity::class);
+    }
+
+    /**
+     * @GFBChatMatcher\Any()
      */
     public function helloAction()
     {
-        die('Method ' . __METHOD__ . ' catch it!');
+        return "Hello!\nCan I help you?\n=))\n"
+            . "Please write \"category\" if you want to select product's category.";
     }
 }

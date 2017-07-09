@@ -2,81 +2,71 @@
 
 namespace GFB\ChatBotBundle\Routing;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\Annotations\CachedReader;
 use GFB\ChatBotBundle\Activity;
-use GFB\ChatBotBundle\Annotation\RegexMatch;
-use GFB\ChatBotBundle\Annotation\WaitFor;
+
+use GFB\ChatBotBundle\Foundation\Request;
+use GFB\ChatBotBundle\MatcherInterface;
 
 class Router
 {
     /** @var CachedReader */
     private $annotationReader;
 
-    /** @var array */
-    private $activities;
+    /** @var Registry */
+    private $doctrine;
 
     /**
      * Router constructor.
      * @param CachedReader $annotationReader
-     * @param array $activities
+     * @param Registry $doctrine
      */
-    public function __construct(CachedReader $annotationReader, array $activities = [])
-    {
+    public function __construct(
+        CachedReader $annotationReader,
+        Registry $doctrine
+    ) {
         $this->annotationReader = $annotationReader;
-        $this->activities = $activities;
+        $this->doctrine = $doctrine;
     }
 
-    public function resolve($query)
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function resolve(Request $request)
     {
-        foreach ($this->activities as $className) {
-            /** @var Activity $activity */
-            $activity = new $className();
+        $className = $request->getSession()->getActivityName();
+        /** @var Activity $activity */
+        $activity = new $className();
 
-            $object = new \ReflectionObject($activity);
+        $object = new \ReflectionObject($activity);
 
-            foreach ($object->getMethods() as $method) {
-                foreach ($this->annotationReader->getMethodAnnotations($method) as $annotation) {
+        foreach ($object->getMethods() as $method) {
+            foreach ($this->annotationReader->getMethodAnnotations($method) as $annotation) {
 
-                    if ($annotation instanceof WaitFor && $annotation->getPhrase() == $query) {
-                        $method->invoke($activity, []);
+                $needUserRequest = count($method->getParameters())
+                    && null != $method->getParameters()[0]->getClass()
+                    && $method->getParameters()[0]->getClass()->getName() == Request::class;
 
-                        return;
+                if ($annotation instanceof MatcherInterface
+                    && $annotation->isSuitable($request->getQuery())
+                ) {
+                    $annotation->decorateRequest($request);
+
+                    $arguments = [];
+                    if ($needUserRequest) {
+                        $arguments[] = $request;
                     }
+                    $arguments = array_merge($arguments, $request->getParameters());
 
-                    if ($annotation instanceof RegexMatch
-                        && preg_match($annotation->getExpression(), $query, $matches)
-                    ) {
-                        if (count($matches) > 1) {
-                            $args = &$matches;
-                            unset($args[0]);
-                            $args = array_values($args);
-                            $method->invokeArgs($activity, $args);
-                        } else {
-                            $method->invoke($activity, []);
-                        }
-
-                        return;
-                    }
-
+                    return $method->invokeArgs($activity, $arguments);
                 }
+
             }
         }
 
         throw new \Exception('Activity not found!');
-    }
-
-    public function loadActivities(array $activities)
-    {
-        foreach ($activities as $activity) {
-            if (is_string($activity) && (new $activity()) instanceof Activity) {
-                $this->activities[] = $activity;
-            }
-
-            if (is_object($activity) && $activity instanceof Activity) {
-                $this->activities[] = get_class($activity);
-            }
-        }
-
-        return $this;
     }
 }

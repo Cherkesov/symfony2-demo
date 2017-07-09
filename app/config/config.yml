@@ -58,6 +58,9 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+        resolve_target_entities:
+            GFB\ChatBotBundle\Entity\UserInterface: ViberBotDemoBundle\Entity\User
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
@@ -65,3 +68,6 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+gfb_chat_bot:
+    welcome_activity: ViberBotDemoBundle\Chat\Activity\WelcomeActivity

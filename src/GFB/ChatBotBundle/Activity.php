@@ -2,15 +2,22 @@
 
 namespace GFB\ChatBotBundle;
 
+use GFB\ChatBotBundle\Foundation\RedirectResponse;
+
 class Activity
 {
     /**
-     * @param string $activity
-     * @return null
+     * @param string $activityName
+     * @return RedirectResponse
+     * @throws \Exception
      */
-    public function redirect($activity)
+    public function redirect($activityName)
     {
-        // TODO: write me, baby! Do it, and do it again!
-        return null;
+        $activity = new $activityName();
+        if (!$activityName instanceof Activity) {
+            throw new \Exception($activityName . ' is not activity!');
+        }
+
+        return new RedirectResponse($activityName);
     }
 }
