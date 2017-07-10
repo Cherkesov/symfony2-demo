@@ -1,3 +1,6 @@
+$ composer require gfb/chat-bot-bundle
+
+
 Set user class:
 
     doctrine:
